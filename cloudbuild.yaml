@@ -1,0 +1,8 @@
+steps:
+#Build a docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/app_nodejs/nodeapp:latest', '.']
+#Push image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/app_nodejs/nodeapp:latest']
+
