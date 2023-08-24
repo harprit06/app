@@ -1,8 +1,14 @@
 steps:
 #Build a docker image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/app_nodejs/nodeapp:latest', '.']
+  args: ['build', '-t', 'gcr.io/delta-avenue-396214/nodeapp:$SHORT_SHA', '.']
 #Push image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/app_nodejs/nodeapp:latest']
+  args: ['push', 'gcr.io/delta-avenue-396214/nodeapp:$SHORT_SHA']
+#Deploy Application
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['set', 'image', 'deployment/nodeapp-deployment', 'nodeapp=gcr.io/delta-avenue-396214/nodeapp:$SHORT_SHA']
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=nodeapp-cluster'
 
