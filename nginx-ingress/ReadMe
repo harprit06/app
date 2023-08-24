@@ -1,0 +1,15 @@
+**Installing NGINX Ingress in kubernetes**
+
+mkdir nginx-ingress && cd nginx-ingress
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm search repo ingress-nginx --versions
+CHART_VERSION=””
+APP_VERSION=””
+helm template ingress-nginx ingress-nginx \
+—repo https://kubernetes.github.io/ingress-nginx \
+	—version ${CHART_VERSION} \
+ 	—namespace ingress-nginx > nginx-ingress.${APP_VERSION}.yaml
+Kubectl create ns ingress-nginx
+Kubectl apply -f nginx-ingress.${APP_VERSION}.yaml
+kubectl -n ingress-nginx get po 
+Kubectl -n ingress-nginx get svc
